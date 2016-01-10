@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'ASAudioPlayer_Example', :exclusive => true do
+  pod "ASAudioPlayer", :path => "../"
+end
+
+target 'ASAudioPlayer_Tests', :exclusive => true do
+  pod "ASAudioPlayer", :path => "../"
+
+  
+end
