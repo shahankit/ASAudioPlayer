@@ -1,0 +1,14 @@
+PODS:
+  - ASAudioPlayer (0.1.0)
+
+DEPENDENCIES:
+  - ASAudioPlayer (from `../`)
+
+EXTERNAL SOURCES:
+  ASAudioPlayer:
+    :path: ../
+
+SPEC CHECKSUMS:
+  ASAudioPlayer: ad4cfc87195239f8748f41b75ca19306c20b5bad
+
+COCOAPODS: 0.39.0
