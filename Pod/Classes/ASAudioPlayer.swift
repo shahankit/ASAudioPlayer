@@ -53,9 +53,9 @@ public class ASAudioPlayer: UIView {
 	public var kAudioPlayerBackgroudColor = UIColor(red: 10.0/255.0, green: 10.0/255.0, blue: 10.0/255.0, alpha: 1.0)
 	public var kBackgroundColor = UIColor(red: 10.0/255.0, green: 10.0/255.0, blue: 10.0/255.0, alpha: 1.0)
 	
-	public var playImage = UIImage(named: "play_button");
-	public var pauseImage = UIImage(named: "pause_button")
-	public var sliderImage = UIImage(named: "slider_circle")
+	public var playImage: UIImage!
+	public var pauseImage: UIImage!
+	public var sliderImage: UIImage!
 	
 	override public func layoutSubviews() {
 		if layoutSubviewsCalled {
@@ -102,6 +102,10 @@ public class ASAudioPlayer: UIView {
 	}
 	
 	func initSubviews() {
+		playImage = self.imageNamedFromPodBundle("play_button.png")
+		pauseImage = self.imageNamedFromPodBundle("pause_button.png")
+		sliderImage = self.imageNamedFromPodBundle("slider_circle.png")
+		
 		playButton = UIButton()
 		playButton.setImage(playImage, forState: UIControlState.Normal)
 		playButton.addTarget(self, action: Selector("playButtonPressed"), forControlEvents: UIControlEvents.TouchUpInside)
@@ -182,7 +186,7 @@ public class ASAudioPlayer: UIView {
 			audioPlayer?.pause()
 			
 			audioPlaying = false
-			playButton.setImage(UIImage(named: "play_button"), forState: UIControlState.Normal)
+			playButton.setImage(playImage, forState: UIControlState.Normal)
 		}
 		else {
 			if audioPlayer.error != nil {
@@ -192,7 +196,7 @@ public class ASAudioPlayer: UIView {
 			audioPlayer.play()
 			
 			audioPlaying = true
-			playButton.setImage(UIImage(named: "pause_button"), forState: UIControlState.Normal)
+			playButton.setImage(pauseImage, forState: UIControlState.Normal)
 		}
 	}
 	
@@ -258,7 +262,7 @@ public class ASAudioPlayer: UIView {
 		audioPlaying = false
 		updateSlider(sliderMinX)
 		seekPlayer(0)
-		playButton.setImage(UIImage(named: "play_button"), forState: UIControlState.Normal)
+		playButton.setImage(playImage, forState: UIControlState.Normal)
 		currentTimeLabel.text = "00:00"
 	}
 	
@@ -267,7 +271,7 @@ public class ASAudioPlayer: UIView {
 			audioPlayer?.pause()
 			
 			audioPlaying = false
-			playButton.setImage(UIImage(named: "play_button"), forState: UIControlState.Normal)
+			playButton.setImage(playImage, forState: UIControlState.Normal)
 		}
 	}
 	
@@ -295,6 +299,23 @@ public class ASAudioPlayer: UIView {
 	func setPlay(play: Bool) {
 		if !play {
 			pause()
+		}
+	}
+	
+	func imageNamedFromPodBundle(imageName: String) -> UIImage? {
+		let podBundle = NSBundle(forClass: self.classForCoder)
+		
+		if let bundleUrl = podBundle.URLForResource("ASAudioPlayer", withExtension: "bundle") {
+			if let bundle = NSBundle(URL: bundleUrl) {
+				let image = UIImage(named: imageName, inBundle: bundle, compatibleWithTraitCollection: nil)
+				return image;
+				
+			} else {
+				return nil
+				
+			}
+		} else {
+			return nil
 		}
 	}
 	
